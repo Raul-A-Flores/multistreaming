@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Playlist } from '../data/playlists'
 import { BsTwitch , BsYoutube} from 'react-icons/bs'
-
+import { Button } from "@/components/ui/button"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement>{
   playlists: Playlist[]
@@ -19,7 +19,22 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
             <span>Twitch</span><span className='text-purple-500'><BsTwitch /></span>
           </h2>
           <div className='space-y-1'>
-              zas
+            <Button variant="secondary" className="w-full justify-start">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2 h-4 w-4"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10 8 16 12 10 16 10 8" />
+                </svg>
+                Listen Now
+              </Button>
           </div>
         </div>
 
@@ -29,7 +44,22 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
             <span className='text-red-500 ml-2'><BsYoutube /></span>
           </h2>
           <div>
-            dsfsda
+            <Button variant="secondary" className="w-full justify-start">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2 h-4 w-4"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10 8 16 12 10 16 10 8" />
+                </svg>
+                Listen Now
+              </Button>
           </div>
 
         </div>

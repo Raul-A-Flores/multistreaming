@@ -21,7 +21,9 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
           </h2>
           <div className='space-y-1'>
             <SidebarCard name='test' chnId='test' chnPlt='twitch' iconUrl=''/>
-            <Button variant="secondary" className="w-full justify-start">
+            <SidebarCard name='test' chnId='test' chnPlt='twitch' iconUrl=''/>
+
+            {/* <Button variant="secondary" className="w-full justify-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -36,7 +38,7 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
                   <polygon points="10 8 16 12 10 16 10 8" />
                 </svg>
                 Listen Now
-              </Button>
+              </Button> */}
           </div>
         </div>
 
@@ -46,7 +48,11 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
             <span className='text-red-500 ml-2'><BsYoutube /></span>
           </h2>
           <div>
-            <Button variant="secondary" className="w-full justify-start">
+          <SidebarCard name='test' chnId='test' chnPlt='twitch' iconUrl=''/>
+
+          <SidebarCard name='test' chnId='test' chnPlt='twitch' iconUrl=''/>
+
+ {/*            <Button variant="secondary" className="w-full justify-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -61,7 +67,7 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
                   <polygon points="10 8 16 12 10 16 10 8" />
                 </svg>
                 Listen Now
-              </Button>
+              </Button> */}
           </div>
 
         </div>

@@ -9,7 +9,7 @@ import { getServerSession } from "next-auth/next"
 
 
 const validate_endpoint = 'https://id.twitch.tv/oauth2/validate'
-const get_follow_endpoint = 'https://api.twtich.tv/helix/channels/followed?user_id='
+const get_follow_endpoint = 'https://api.twtich.tv/helix/channels/followed?user_id'
 const channel_endpoint = 'https://api.twich.tv/helix/users'
 
 let chn_list: string =''
@@ -18,16 +18,12 @@ let chn_list: string =''
 
     const session = await getServerSession(authOptions)
 
-    console.log(session)
+    console.log(session.accessToken)
     let data = []
-    const get_follow_endpoints = `https://api.twitch.tv/helix/channels/followers?broadcaster_id=${session.id}`
-    const get_follow = `https://api.twtich.tv/helix/users/follows?to_id=${session.id}&first=10`
-    const get_followed = `https://api.twitch.tv/helix/channels/followed?user_id=${session.id}`
 
-
-    const response = await fetch(get_followed, {
+    const response = await fetch(validate_endpoint, {
         headers: {
-            'Authorization': 'Bearer ' + (session.accessToken),
+            'Authorization': 'OAuth ' + (session.accessToken),
             'Client-Id': process.env.TWITCH_CLIENT_ID
 
         }

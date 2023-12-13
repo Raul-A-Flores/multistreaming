@@ -1,7 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 
+
+import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 import _ from 'lodash';
-import { platform } from "os";
+import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next"
 
 
 const validate_endpoint = 'https://id.twitch.tv/oauth2/validate'
@@ -10,24 +14,33 @@ const channel_endpoint = 'https://api.twich.tv/helix/users'
 
 let chn_list: string =''
 
-export default async function handler(
-    req: NextApiRequest, 
-    res: NextApiResponse<ResponseData>
+ export async function GET(req: Request, res: Response) {
 
-){
-    const token = req.headers.authorization;
-    const {method, query } = req;
-    const user_id = query.user_id;
+    const session = await getServerSession(authOptions)
+
+    console.log(session.accessToken)
     let data = []
 
     const response = await fetch(validate_endpoint, {
         headers: {
-            'Authorization': token
+            'Authorization': 'OAuth ' + (session.accessToken),
+            'Client-Id': process.env.TWITCH_CLIENT_ID
+
         }
-    }).then((r) => r.json())
+    }).then((resp) => {
+        return resp.json()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    return NextResponse.json({ response })
+
+/* 
+    .then((r) => r.json())
     .then((d)=>{
         console.log(d.client_id)
-        const bearer = _.replace(token, 'OAuth', 'Bearer')
+        const bearer = _.replace('token', 'OAuth', 'Bearer')
         fetch(get_follow_endpoint+d.user_id,{
             headers: {
                 'Authorization': bearer, 
@@ -42,6 +55,7 @@ export default async function handler(
                     chn_list = chn_list + '&login=' + value.broadcaster_login
 
                 }
+                
             })
             fetch(channel_endpoint+chn_list,{
                 headers:{
@@ -51,9 +65,15 @@ export default async function handler(
             }).then((raw_data)=> raw_data.json())
             .then((raw_data)=>{
                 const data = {data: raw_data, platform: 'twitch'}
-                res.status(200).json({message:data})
-            })
+
+            })  
         })
     })
+ */
+    
+} 
 
-}
+
+
+
+

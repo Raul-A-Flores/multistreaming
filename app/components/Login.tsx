@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { saveLoginSession, saveTwitchSession, saveYoutubeSession } from '@/modules/slice';
 import { TbPlugConnected } from "react-icons/tb";
+import { persistor } from '@/modules/store';
 
 
 
@@ -46,19 +47,66 @@ const Login = (props: Props) => {
 
   }
 
+  const validateSession = async() =>{
+    if (loginSession?.provider !== undefined){
+      if(loginSession?.proivder === 'twitch'){
+        const res = await fetch('/api/validate-session?platform=twitch',{
+
+          headers: {
+            "Authorization": "OAuth " + loginSession?.accessToken
+          }
+        })
+
+        if (!res.ok){
+          console.log('invalid token', loginSession?.accessToken)
+          signOut()
+          persistor.purge()
+        }
+      }
+      
+
+      if(loginSession?.proivder === 'youtube'){
+        const res = await fetch('/api/validate-session?platform=youtube',{
+
+          headers: {
+            "Authorization": "OAuth " + loginSession?.accessToken
+          }
+        })
+
+        if (!res.ok){
+          console.log('invalid token', loginSession?.accessToken)
+          signOut()
+          persistor.purge()
+        }
+    } 
+  } else {
+    console.log('no login session')
+  }
+  }
+
+
   useEffect (()=>{
     if (loginSession?.user?.name === undefined){
       dispatch(saveLoginSession(session))
+      console.log(session?.accessToken, 'TOKEN')
     }
     if (session?.provider === 'twitch'){
       dispatch(saveTwitchSession(session))
+      console.log(session?.accessToken, 'TWITCH')
+
     }
     if (session?.provider === 'google'){
       dispatch(saveYoutubeSession(session))
+      console.log(session?.accessToken, 'Google')
+
     }
     
 
   },[session])
+
+  useEffect(()=>{
+    validateSession()
+  },[])
 
   if (loginSession){
     return (
@@ -81,7 +129,7 @@ const Login = (props: Props) => {
               <span>Sign-in</span>
             </DropdownMenuItem>
   
-            <DropdownMenuItem onClick={() => signOut()}>
+            <DropdownMenuItem onClick={() => {persistor.purge(); signOut()}}>
               <span>Sign-out</span>
             </DropdownMenuItem>
   

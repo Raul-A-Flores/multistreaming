@@ -10,7 +10,7 @@ export const authOptions: AuthOptions = {
         TwitchProvider({
             clientId: <string>process.env.TWITCH_CLIENT_ID,
             clientSecret: <string>process.env.TWITCH_CLIENT_SECRET,
-            authorization: { params: {scope: 'openid user:read:email user:read:follow'}}
+            authorization: { params: {scope: 'openid user:read:email user:read:follows'}}
 
         }),
         GoogleProvider({

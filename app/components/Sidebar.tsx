@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { Playlist } from '../data/playlists'
 import { BsTwitch , BsYoutube} from 'react-icons/bs'
 import { Button } from "@/components/ui/button"
+import SidebarCard from './SidebarCard';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement>{
   playlists: Playlist[]
@@ -19,6 +20,7 @@ const Sidebar = ({className, playlists}: SidebarProps) => {
             <span>Twitch</span><span className='text-purple-500'><BsTwitch /></span>
           </h2>
           <div className='space-y-1'>
+            <SidebarCard name='test' chnId='test' chnPlt='twitch' iconUrl=''/>
             <Button variant="secondary" className="w-full justify-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,9 @@
 import React from 'react'
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Login from './Login';
+import Search from './SearchBox';
+import StreamConfig from './StreamConfig';
 
 type Props = {}
 
@@ -9,12 +12,12 @@ const Hero = (props: Props) => {
     <div className='flex flex-col'>
       <div className='flex justify-center'>
         <div className='flex justify-normal w-[80%]'>
-          <p>input box</p>
-          <p>config</p>
+          <Search />
+          <StreamConfig />
 
         </div>
         <div className='flex justify-end w-[20%]'>
-          login
+          <Login />
         </div>
       </div>
 

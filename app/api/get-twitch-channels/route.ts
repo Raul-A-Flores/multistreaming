@@ -19,7 +19,7 @@ let chn_list: string =''
     const validate_endpoint = 'https://id.twitch.tv/oauth2/validate'
     const get_follow_endpoints = `https://api.twitch.tv/helix/channels/followers?broadcaster_id=${session.id}`
     const get_user_endpoint = `https://api.twtich.tv/helix/users/follows?to_id=${session.id}&first=10`
-    const get_followers_endpoint = `https://api.twitch.tv/helix/channels/followed?user_id=${session.id}`
+    const get_followers_endpoint = `https://api.twitch.tv/helix/channels/followed?user_id=${session.id}&first=5`
 
 
 //console.log(session)

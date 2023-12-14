@@ -51,12 +51,20 @@ const Login = (props: Props) => {
   const getTwitch = async() =>{
     const res = await fetch('/api/get-twitch-channels',{
       headers:{
-        'Authorization': "OAuth " + session?.accessToken 
+        'Authorization': "Bearer " + session?.accessToken
       }
     }).then((res)=> res.json())
-    .then((res)=>{
+    
+    console.log(res.response.data[1], 'RES')
+    
+      {res.response.data.map((item: string, index: number) =>{
+      
+      
+        console.log(res.response.data[index])
+      }) }
       dispatch(twitchChannels(res.message))
-    })
+      // console.log(tchannels)
+    
   }
 
   const validateSession = async() =>{
@@ -99,18 +107,14 @@ const Login = (props: Props) => {
   useEffect (()=>{
     if (loginSession?.user?.name === undefined){
       dispatch(saveLoginSession(session))
-      console.log(session?.accessToken, 'TOKEN')
     }
     if (session?.provider === 'twitch'){
       dispatch(saveTwitchSession(session))
       getTwitch()
-      console.log(tchannels , 'CHANNELS')
-      console.log(session?.accessToken, 'TWITCH')
-
+    
     }
     if (session?.provider === 'google'){
       dispatch(saveYoutubeSession(session))
-      console.log(session?.accessToken, 'Google')
 
     }
     

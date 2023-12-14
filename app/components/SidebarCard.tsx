@@ -2,8 +2,12 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { selected } from '@/modules/slice';
 import { platform } from 'os';
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 
 
 const SidebarCard = (props: {
@@ -12,13 +16,16 @@ const SidebarCard = (props: {
     chnPlt: string; 
     iconUrl: string;}) => {
 
-        const chnInfo ={
+    const select = useSelector((state)=> state.name)
+    const dispatch = useDispatch()
+
+    const chnInfo ={
             name: props.name, 
             id: props.chnId, 
             platform: props.chnPlt
         }
   return (
-    <div className='w-full'>
+    <div className='w-full' onClick={()=> dispatch(selected(chnInfo))}>
         <Card className='border-0'/>
             <CardHeader className='grid grid-cols-5 itesm-center place-items-start pt-1 pb-1 pl-2 space-x-2'>
             <div className='text-sm'>

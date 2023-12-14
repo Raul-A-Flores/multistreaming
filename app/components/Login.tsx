@@ -23,7 +23,7 @@ import { useTheme } from 'next-themes';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { saveLoginSession, saveTwitchSession, saveYoutubeSession } from '@/modules/slice';
+import { saveLoginSession, saveTwitchSession, saveYoutubeSession, twitchChannels } from '@/modules/slice';
 import { TbPlugConnected } from "react-icons/tb";
 import { persistor } from '@/modules/store';
 
@@ -38,6 +38,7 @@ const Login = (props: Props) => {
   const loginSession = useSelector((state)=> state.counter.loginSession)
   const twitchSession = useSelector((state)=> state.counter.twitchSession)
   const youtubeSession = useSelector((state)=> state.counter.youtubeSession)
+  const tchannels = useSelector((state)=> state.counter.tchannels)
 
   const dispatch = useDispatch()
 
@@ -47,11 +48,21 @@ const Login = (props: Props) => {
 
   }
 
+  const getTwitch = async() =>{
+    const res = await fetch('/api/get-twitch-channels',{
+      headers:{
+        'Authorization': "OAuth " + session?.accessToken 
+      }
+    }).then((res)=> res.json())
+    .then((res)=>{
+      dispatch(twitchChannels(res.message))
+    })
+  }
+
   const validateSession = async() =>{
     if (loginSession?.provider !== undefined){
       if(loginSession?.proivder === 'twitch'){
         const res = await fetch('/api/validate-session?platform=twitch',{
-
           headers: {
             "Authorization": "OAuth " + loginSession?.accessToken
           }
@@ -92,6 +103,8 @@ const Login = (props: Props) => {
     }
     if (session?.provider === 'twitch'){
       dispatch(saveTwitchSession(session))
+      getTwitch()
+      console.log(tchannels , 'CHANNELS')
       console.log(session?.accessToken, 'TWITCH')
 
     }
